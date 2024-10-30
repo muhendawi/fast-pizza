@@ -1,16 +1,14 @@
-import { useDispatch } from 'react-redux';
-import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
-import { deleteItem } from './cartSlice';
 import { motion } from 'framer-motion';
+import DeleteItem from './DeleteItem';
+import UpdateItemQuantity from './UpdateItemQuantity';
+import { useSelector } from 'react-redux';
+import { getCurrentQuantityById } from './cartSlice';
 
 function CartItem({ item, itemIndex }) {
   const { pizzaId, name, quantity, totalPrice } = item;
-  const dispatch = useDispatch();
+  const currentQuantity = useSelector(getCurrentQuantityById(pizzaId));
 
-  function handleDeleteCartItem() {
-    dispatch(deleteItem(pizzaId));
-  }
   return (
     <motion.li
       initial={{ opacity: 0, y: -15 }}
@@ -24,9 +22,9 @@ function CartItem({ item, itemIndex }) {
       </p>
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-bold">{formatCurrency(totalPrice)}</p>
-        <Button type="small" onClick={handleDeleteCartItem}>
-          Delete
-        </Button>
+
+        <UpdateItemQuantity id={pizzaId} currentQuantity={currentQuantity} />
+        <DeleteItem id={pizzaId} />
       </div>
     </motion.li>
   );

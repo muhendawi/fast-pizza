@@ -40,6 +40,8 @@ const cartSlice = createSlice({
       item.quantity--;
       // updating the total price after increasing the quantity
       item.totalPrice = item.quantity * item.unitPrice;
+      //   deleting the item from Cart if the quantity is 0
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
     },
     clearCart(state) {
       state.cart = [];
@@ -61,3 +63,6 @@ export const getTotalCartQuantity = (store) =>
 
 export const getTotalCartPrice = (store) =>
   store.cart.cart.reduce((accu, item) => accu + item.totalPrice, 0);
+
+export const getCurrentQuantityById = (id) => (store) =>
+  store.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
