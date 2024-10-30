@@ -9,6 +9,7 @@ import {
 import { createOrder } from '../../services/apiRestaurant';
 import Button from '../../ui/Button';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -51,7 +52,12 @@ function CreateOrder() {
   const cart = fakeCart;
 
   return (
-    <div className="px-4 py-6">
+    <motion.div
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      className="px-4 py-6"
+    >
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
 
       {/* <Form method="POST" action="/order/new"> */}
@@ -112,7 +118,7 @@ function CreateOrder() {
           </Button>
         </div>
       </Form>
-    </div>
+    </motion.div>
   );
 }
 
